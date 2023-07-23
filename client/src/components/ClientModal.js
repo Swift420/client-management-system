@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Nav, Tab } from "react-bootstrap";
-// import { clients, contacts } from "../data/mockData";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { BASE_URL_CLIENT, BASE_URL_CONTACT } from "../utils/constants";
 
 const ClientContactModal = ({ showModal, handleCloseModal }) => {
@@ -10,23 +8,10 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-  const [itemContacts, setItemContacts] = useState([]);
   const [itemName, setItemName] = useState("");
   const [itemDescription, setItemDescription] = useState("");
-  //   console.log(itemName);
   const [linkedContacts, setLinkedContacts] = useState([]);
-  const [isLinked, setIsLinked] = useState(false);
-  const [isLinkedState, setIsLinkedState] = useState("");
   const [contacts, setContacts] = useState([]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`${BASE_URL_CONTACT}`)
-  //     .then((contacts) => setContacts(contacts.data))
-  //     .catch((e) => console.log(e));
-
-  //   // fetchClients();
-  // }, []);
 
   useEffect(() => {
     fetchContacts();
@@ -54,7 +39,6 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!itemName) {
-      // Display an error message or handle validation errors
       alert("Please fill in all the required fields.");
       return;
     }
@@ -64,18 +48,6 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
       clientCode: itemName,
       linkedContacts: linkedContacts,
     };
-    // console.log(newClient);
-
-    // clients.push(newClient);
-
-    // axios
-    //   .post(`${BASE_URL_CLIENT}/addclient`, newClient)
-    //   .then((client) => {
-    //     console.log("Response:", client.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", `${BASE_URL_CLIENT}/addclient`);
@@ -91,13 +63,12 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
         }
       }
     };
-    //
+
     xhr.send(JSON.stringify(newClient));
     setItemName("");
     setItemDescription("");
     setLinkedContacts([]);
 
-    // Close the modal after successful submission (optional)
     handleCloseModal();
   };
 
@@ -135,7 +106,6 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
           </Nav>
           <Tab.Content>
             <Tab.Pane eventKey="general">
-              {/* Content for General tab */}
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="clientName">Name:</label>
@@ -147,8 +117,7 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
                     value={itemName}
                     onChange={(e) => setItemName(e.target.value)}
                   />
-                  {/* <label htmlFor="clientCode">Client Code:</label>
-                  <p>{itemName}</p> */}
+
                   <label htmlFor="clientDescription">Description:</label>
                   <textarea
                     className="form-control"
@@ -158,11 +127,9 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
                     onChange={(e) => setItemDescription(e.target.value)}
                   ></textarea>
                 </div>
-                {/* Add other input fields for general details */}
               </form>
             </Tab.Pane>
             <Tab.Pane eventKey="contacts">
-              {/* Content for Contacts tab */}
               {contacts.length !== 0 ? (
                 <table className="table table-striped">
                   <thead>
@@ -185,12 +152,10 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
                           style={{ cursor: "pointer" }}
                           onClick={() => toggleLink(contact.id)}
                         >
-                          {/* Check if the contact is linked or not */}
                           {linkedContacts.includes(contact.id)
                             ? "Linked"
                             : "Link"}
                         </td>
-                        {/* <td>{client.linkedContacts.length}</td> */}
                       </tr>
                     ))}
                   </tbody>
@@ -198,8 +163,6 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
               ) : (
                 <p>No clients found.</p>
               )}
-
-              {/* You can add a list of contacts, input fields for contact details, etc. */}
             </Tab.Pane>
           </Tab.Content>
         </Tab.Container>

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Nav, Tab } from "react-bootstrap";
-// import { clients, contacts } from "../data/mockData";
-import { Link } from "react-router-dom";
 import { BASE_URL_CLIENT, BASE_URL_CONTACT } from "../utils/constants";
 import axios from "axios";
 
@@ -10,32 +8,13 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-  const [itemContacts, setItemContacts] = useState([]);
   const [itemName, setItemName] = useState("");
   const [itemSurname, setItemSurname] = useState("");
   const [itemEmail, setItemEmail] = useState("");
-  const [itemDescription, setItemDescription] = useState("");
-  //   console.log(itemName);
   const [linkedClients, setLinkedClients] = useState([]);
-  const [isLinked, setIsLinked] = useState(false);
-  const [isLinkedState, setIsLinkedState] = useState("");
   const [clients, setClients] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${BASE_URL_CLIENT}`)
-  //     .then((clients) => setClients(clients.data))
-  //     .catch((e) => console.log(e));
-
-  //   // fetchClients();
-  // }, []);
-
   useEffect(() => {
-    // axios
-    //   .get(`${BASE_URL_CLIENT}`)
-    //   .then((clients) => setClients(clients.data))
-    //   .catch((e) => console.log(e));
-
     fetchClients();
   }, []);
 
@@ -60,8 +39,7 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!itemName || !itemSurname || !itemEmail) {
-      // Display an error message or handle validation errors
+    if (!itemName.trim() || !itemSurname.trim() || !itemEmail.trim()) {
       alert("Please fill in all the required fields.");
       return;
     }
@@ -72,44 +50,39 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
       email: itemEmail,
       linkedClients: linkedClients,
     };
-    // console.log(newClient);
 
-    // contacts.push(newContact);
+    try {
+      const response = await axios.post(
+        `${BASE_URL_CONTACT}/addcontact`,
+        newContact
+      );
+      console.log("Response:", response.data);
+    } catch (error) {
+      alert("Incorrect Email Format/ Already In Use");
+      return;
+    }
 
-    // console.log(contacts);
+    // const xhr = new XMLHttpRequest();
+    // xhr.open("POST", `${BASE_URL_CONTACT}/addcontact`);
+    // xhr.setRequestHeader("Content-Type", "application/json");
 
-    // axios
-    //   .post(`${BASE_URL_CONTACT}/addcontact`, newContact)
-    //   .then((contact) => {
-    //     console.log("Response:", contact.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
+    // xhr.onreadystatechange = function () {
+    //   if (xhr.readyState === XMLHttpRequest.DONE) {
+    //     if (xhr.status === 200) {
+    //       const contactData = JSON.parse(xhr.responseText);
+    //       console.log("Response:", contactData);
+    //     } else {
+    //       console.error("Error:", xhr.status, xhr.statusText);
+    //     }
+    //   }
+    // };
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", `${BASE_URL_CONTACT}/addcontact`);
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          const contactData = JSON.parse(xhr.responseText);
-          console.log("Response:", contactData);
-        } else {
-          console.error("Error:", xhr.status, xhr.statusText);
-        }
-      }
-    };
-
-    xhr.send(JSON.stringify(newContact));
+    // xhr.send(JSON.stringify(newContact));
 
     setItemName("");
     setItemSurname("");
     setItemEmail("");
     setLinkedClients([]);
-
-    // Close the modal after successful submission (optional)
     handleCloseModal();
   };
 
@@ -150,7 +123,7 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
               {/* Content for General tab */}
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label htmlFor="contactName">Name:</label>
+                  <label htmlFor="contactName">Name: *</label>
                   <input
                     type="text"
                     className="form-control"
@@ -159,7 +132,7 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
                     value={itemName}
                     onChange={(e) => setItemName(e.target.value)}
                   />
-                  <label htmlFor="contactSurname">Surname:</label>
+                  <label htmlFor="contactSurname">Surname: *</label>
                   <input
                     type="text"
                     className="form-control"
@@ -168,7 +141,7 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
                     value={itemSurname}
                     onChange={(e) => setItemSurname(e.target.value)}
                   />
-                  <label htmlFor="clientEmail">Email:</label>
+                  <label htmlFor="clientEmail">Email: *</label>
                   <input
                     type="text"
                     className="form-control"

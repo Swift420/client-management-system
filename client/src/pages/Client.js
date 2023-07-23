@@ -11,11 +11,6 @@ const Client = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // axios
-    //   .get(`${BASE_URL_CLIENT}`)
-    //   .then((clients) => setClients(clients.data))
-    //   .catch((e) => console.log(e));
-
     fetchClients();
   });
 

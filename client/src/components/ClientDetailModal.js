@@ -1,37 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Nav, Tab } from "react-bootstrap";
-// import { clients, contacts } from "../data/mockData";
+
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL_CLIENT, BASE_URL_CONTACT } from "../utils/constants";
 
 const ClientDetailModal = ({ showModal, handleCloseModal, clientProp }) => {
-  const [activeTab, setActiveTab] = React.useState("general");
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-  };
-
-  const [itemContacts, setItemContacts] = useState([]);
-  const [itemName, setItemName] = useState("");
-  const [itemDescription, setItemDescription] = useState("");
-  //   console.log(itemName);
   const [linkedContacts, setLinkedContacts] = useState([]);
-  const [isLinked, setIsLinked] = useState(false);
-  const [isLinkedState, setIsLinkedState] = useState("");
   const [contacts, setContacts] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .get(`${BASE_URL_CONTACT}`)
-  //     .then((contacts) => setContacts(contacts.data))
-  //     .catch((e) => console.log(e));
-
-  //   // fetchClients();
-  // }, []);
 
   useEffect(() => {
     setLinkedContacts(clientProp.linkedContacts);
     fetchContacts();
-    console.log(contacts);
   }, []);
 
   const fetchContacts = () => {
@@ -54,17 +34,12 @@ const ClientDetailModal = ({ showModal, handleCloseModal, clientProp }) => {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-
     const updatedClient = {
       name: clientProp.name,
       description: clientProp.description,
       clientCode: clientProp.clientCode,
       linkedContacts: linkedContacts,
     };
-    // console.log(newClient);
-
-    // clients.push(newClient);
 
     const xhr = new XMLHttpRequest();
     xhr.open("PUT", `${BASE_URL_CLIENT}/updateclient`);
@@ -102,7 +77,6 @@ const ClientDetailModal = ({ showModal, handleCloseModal, clientProp }) => {
         <Modal.Title>Add/Remove a Link</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {/* Content for Contacts tab */}
         {contacts.length !== 0 ? (
           <table className="table table-striped">
             <thead>
@@ -123,10 +97,8 @@ const ClientDetailModal = ({ showModal, handleCloseModal, clientProp }) => {
                     style={{ cursor: "pointer" }}
                     onClick={() => toggleLink(contact.id)}
                   >
-                    {/* Check if the contact is linked or not */}
                     {linkedContacts.includes(contact.id) ? "Linked" : "Link"}
                   </td>
-                  {/* <td>{client.linkedContacts.length}</td> */}
                 </tr>
               ))}
             </tbody>
@@ -134,8 +106,6 @@ const ClientDetailModal = ({ showModal, handleCloseModal, clientProp }) => {
         ) : (
           <p>No clients found.</p>
         )}
-
-        {/* You can add a list of contacts, input fields for contact details, etc. */}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleCloseModal}>

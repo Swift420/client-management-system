@@ -6,15 +6,6 @@ module.exports.getAllClients = async (req, res) => {
   res.send(clients);
 };
 
-// module.exports.createClient = async (req, res) => {
-//   const client = req.body;
-//   console.log(client);
-//   await clientModel.create(client).then((data) => {
-//     console.log("Saved Successfully");
-//     res.status(201).send(data);
-//   });
-// };
-
 module.exports.createClient = async (req, res) => {
   const { name, description, linkedContacts } = req.body;
 

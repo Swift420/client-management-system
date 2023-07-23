@@ -1,23 +1,14 @@
-// src/ClientList.js
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import { clients, contacts } from "../data/mockData";
 import { Button, Modal } from "react-bootstrap";
-import ClientContactModal from "../components/ClientModal";
 import ContactModal from "../components/ContactModal";
 import { BASE_URL_CONTACT } from "../utils/constants";
-import axios from "axios";
 
 const Contact = () => {
   const [showModal, setShowModal] = useState(false);
   const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
-    // axios
-    //   .get(`${BASE_URL_CONTACT}`)
-    //   .then((contacts) => setContacts(contacts.data))
-    //   .catch((e) => console.log(e));
-
     fetchContacts();
   });
 
@@ -79,10 +70,7 @@ const Contact = () => {
           <tbody>
             {contacts.map((contact) => (
               <tr key={contact.id}>
-                <td>
-                  {contact.name}
-                  {/* <Link to={`/contact/${contact.id}`}>{contact.name}</Link> */}
-                </td>
+                <td>{contact.name}</td>
                 <td>{contact.surname}</td>
                 <td>{contact.email}</td>
                 <td>{contact.linkedClients.length}</td>

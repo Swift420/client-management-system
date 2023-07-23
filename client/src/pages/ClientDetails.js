@@ -52,14 +52,11 @@ const ClientDetails = () => {
   const clientCode = useParams();
 
   const client = clients.find((c) => c.clientCode === clientCode.id);
-  // console.log(contacts[0]);
-  // console.log(client);
   const linkedContacts = contacts.filter(
     (contact) => client && client.linkedContacts.includes(contact.id)
   );
 
   if (!client) {
-    // Handle case when client is not found
     return <div>Client not found</div>;
   }
 
