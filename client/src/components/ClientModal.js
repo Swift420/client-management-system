@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Nav, Tab } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BASE_URL_CLIENT, BASE_URL_CONTACT } from "../utils/constants";
+import axios from "axios";
 
 const ClientContactModal = ({ showModal, handleCloseModal }) => {
   const [activeTab, setActiveTab] = React.useState("general");
@@ -38,33 +39,51 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!itemName) {
-      alert("Please fill in all the required fields.");
-      return;
-    }
+    // if (!itemName) {
+    //   alert("Please fill in all the required fields.");
+    //   return;
+    // }
     const newClient = {
       name: itemName,
       description: itemDescription,
       clientCode: itemName,
       linkedContacts: linkedContacts,
     };
+    try {
+      const response = await axios.post(
+        `${BASE_URL_CLIENT}/addclient`,
+        newClient
+      );
+      console.log("Response:", response.data);
+    } catch (error) {
+      alert(error.response.data.error);
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", `${BASE_URL_CLIENT}/addclient`);
-    xhr.setRequestHeader("Content-Type", "application/json");
+      return;
+    }
 
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          const clientData = JSON.parse(xhr.responseText);
-          console.log("Response:", clientData);
-        } else {
-          console.error("Error:", xhr.status, xhr.statusText);
-        }
-      }
-    };
+    // try {
+    //   axios.post(`${BASE_URL_CLIENT}/addclient`, newClient);
+    // } catch (error) {
+    //   alert(error.response.data.error);
+    // }
 
-    xhr.send(JSON.stringify(newClient));
+    // const xhr = new XMLHttpRequest();
+    // xhr.open("POST", `${BASE_URL_CLIENT}/addclient`);
+    // xhr.setRequestHeader("Content-Type", "application/json");
+
+    // xhr.onreadystatechange = function () {
+    //   if (xhr.readyState === XMLHttpRequest.DONE) {
+    //     if (xhr.status === 200) {
+    //       const clientData = JSON.parse(xhr.responseText);
+    //       console.log("Response:", clientData);
+    //     } else {
+    //       const errorResponse = JSON.parse(xhr.responseText);
+    //       alert(`Error: ${errorResponse.error}`);
+    //     }
+    //   }
+    // };
+
+    // xhr.send(JSON.stringify(newClient));
     setItemName("");
     setItemDescription("");
     setLinkedContacts([]);
