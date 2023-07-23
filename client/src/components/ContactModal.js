@@ -120,7 +120,6 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
           </Nav>
           <Tab.Content>
             <Tab.Pane eventKey="general">
-              {/* Content for General tab */}
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="contactName">Name: *</label>
@@ -153,7 +152,6 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
                   {/* <label htmlFor="clientCode">Client Code:</label>
                   <p>{itemName}</p> */}
                 </div>
-                {/* Add other input fields for general details */}
               </form>
             </Tab.Pane>
             <Tab.Pane eventKey="clients">
@@ -188,8 +186,6 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
               ) : (
                 <p>No clients found.</p>
               )}
-
-              {/* You can add a list of contacts, input fields for contact details, etc. */}
             </Tab.Pane>
           </Tab.Content>
         </Tab.Container>
