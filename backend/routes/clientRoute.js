@@ -10,6 +10,6 @@ const router = express.Router();
 router.get("/", getAllClients);
 // router.get("/singleclient", getClientByCode);
 router.post("/addclient", createClient);
-router.post("/updateclient", updateClient);
+router.put("/updateclient", updateClient);
 
 module.exports = router;

@@ -29,7 +29,9 @@ const ClientDetailModal = ({ showModal, handleCloseModal, clientProp }) => {
   // }, []);
 
   useEffect(() => {
+    setLinkedContacts(clientProp.linkedContacts);
     fetchContacts();
+    console.log(contacts);
   }, []);
 
   const fetchContacts = () => {
@@ -52,52 +54,38 @@ const ClientDetailModal = ({ showModal, handleCloseModal, clientProp }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!itemName) {
-      // Display an error message or handle validation errors
-      alert("Please fill in all the required fields.");
-      return;
-    }
-    const newClient = {
-      name: itemName,
-      description: itemDescription,
-      clientCode: itemName,
+    // e.preventDefault();
+
+    const updatedClient = {
+      name: clientProp.name,
+      description: clientProp.description,
+      clientCode: clientProp.clientCode,
       linkedContacts: linkedContacts,
     };
     // console.log(newClient);
 
     // clients.push(newClient);
 
-    // axios
-    //   .post(`${BASE_URL_CLIENT}/addclient`, newClient)
-    //   .then((client) => {
-    //     console.log("Response:", client.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
-
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", `${BASE_URL_CLIENT}/addclient`);
+    xhr.open("PUT", `${BASE_URL_CLIENT}/updateclient`);
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
-          const clientData = JSON.parse(xhr.responseText);
-          console.log("Response:", clientData);
+          console.log("Response:", JSON.parse(xhr.responseText));
+          // Reload the page after successful submission
+          window.location.reload();
         } else {
           console.error("Error:", xhr.status, xhr.statusText);
         }
       }
     };
-    //
-    xhr.send(JSON.stringify(newClient));
-    setItemName("");
-    setItemDescription("");
-    setLinkedContacts([]);
 
-    // Close the modal after successful submission (optional)
+    xhr.send(JSON.stringify(updatedClient));
+
+    console.log(updatedClient);
+    window.location.reload();
     handleCloseModal();
   };
 
@@ -136,9 +124,7 @@ const ClientDetailModal = ({ showModal, handleCloseModal, clientProp }) => {
                     onClick={() => toggleLink(contact.id)}
                   >
                     {/* Check if the contact is linked or not */}
-                    {clientProp.linkedContacts.includes(contact.id)
-                      ? "Linked"
-                      : "Link"}
+                    {linkedContacts.includes(contact.id) ? "Linked" : "Link"}
                   </td>
                   {/* <td>{client.linkedContacts.length}</td> */}
                 </tr>

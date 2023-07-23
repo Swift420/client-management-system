@@ -34,7 +34,6 @@ module.exports.createClient = async (req, res) => {
       const clientExists = await clientModel.findOne({ clientCode });
 
       if (!clientExists) {
-        // Add the client code to the client object
         const client = { name, description, clientCode, linkedContacts };
         const savedClient = await clientModel.create(client);
 
@@ -51,22 +50,21 @@ module.exports.createClient = async (req, res) => {
       .json({ error: "An error occurred while generating the client code." });
   }
 };
-
 module.exports.updateClient = async (req, res) => {
-  const { clientCode } = req.params;
+  const { name, description, linkedContacts, clientCode } = req.body;
 
   try {
-    const clientToUpdate = await Client.findOne({ clientCode });
-    if (!clientToUpdate) {
+    const updatedClient = await clientModel.findOneAndUpdate(
+      { clientCode: clientCode },
+      { name, description, linkedContacts },
+      { new: true }
+    );
+
+    if (!updatedClient) {
       return res.status(404).json({ error: "Client not found." });
     }
 
-    // Update the client data with the new data received in the request body
-    const updatedData = req.body;
-    clientToUpdate.set(updatedData);
-
-    const updatedClient = await clientToUpdate.save();
-    res.json(updatedClient);
+    res.status(200).json(updatedClient);
   } catch (error) {
     console.error("Error:", error);
     res
