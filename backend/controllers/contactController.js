@@ -17,9 +17,13 @@ module.exports.getAllContacts = async (req, res) => {
 module.exports.createContact = async (req, res) => {
   const { id, name, surname, email, linkedClients } = req.body;
 
+  if (!name || !surname) {
+    return res
+      .status(400)
+      .json({ error: "Please provide both name and surname." });
+  }
   // Validate the email format
   if (!validator.isEmail(email)) {
-    console.log("reached");
     return res
       .status(400)
       .json({ error: "Please enter a valid email address." });

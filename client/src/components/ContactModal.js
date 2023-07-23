@@ -39,10 +39,10 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!itemName.trim() || !itemSurname.trim() || !itemEmail.trim()) {
-      alert("Please fill in all the required fields.");
-      return;
-    }
+    // if (!itemName.trim() || !itemSurname.trim() || !itemEmail.trim()) {
+    //   alert("Please fill in all the required fields.");
+    //   return;
+    // }
     const newContact = {
       id: Date.now(),
       name: itemName,
@@ -50,7 +50,7 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
       email: itemEmail,
       linkedClients: linkedClients,
     };
-
+    console.log(newContact);
     try {
       const response = await axios.post(
         `${BASE_URL_CONTACT}/addcontact`,
@@ -58,7 +58,8 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
       );
       console.log("Response:", response.data);
     } catch (error) {
-      alert("Incorrect Email Format/ Already In Use");
+      alert(error.response.data.error);
+
       return;
     }
 
