@@ -70,7 +70,10 @@ const Contact = () => {
           <tbody>
             {contacts.map((contact) => (
               <tr key={contact.id}>
-                <td>{contact.name}</td>
+                <td>
+                  <Link to={`/contacts/${contact.id}`}>{contact.name}</Link>
+                </td>
+
                 <td>{contact.surname}</td>
                 <td>{contact.email}</td>
                 <td>{contact.linkedClients.length}</td>

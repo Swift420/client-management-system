@@ -1,23 +1,26 @@
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
-import Client from './pages/Client';
-import { BrowserRouter as Router, Switch, Route, Routes } from "react-router-dom";
-import Contact from './pages/Contact';
-import ClientDetails from './pages/ClientDetails';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "react-bootstrap";
+import Client from "./pages/Client";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Routes,
+} from "react-router-dom";
+import Contact from "./pages/Contact";
+import ClientDetails from "./pages/ClientDetails";
+import ContactDetails from "./pages/contactDetails";
 function App() {
   return (
     <>
-    
-        
       <div className="container mt-4">
         <Routes>
-          <Route exact path="/" element={<Client/>} />
-          <Route exact path="/contacts" element={<Contact/>} />
-          <Route path="/clients/:id" element={<ClientDetails/>} />
+          <Route exact path="/" element={<Client />} />
+          <Route exact path="/contacts" element={<Contact />} />
+          <Route path="/clients/:id" element={<ClientDetails />} />
+          <Route path="/contact/:id" element={<ContactDetails />} />
         </Routes>
       </div>
-   
     </>
   );
 }
