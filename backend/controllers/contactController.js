@@ -58,3 +58,26 @@ module.exports.createContact = async (req, res) => {
       .json({ error: "An error occurred while saving the contact." });
   }
 };
+
+module.exports.updateContact = async (req, res) => {
+  const { id, name, surname, email, linkedClients } = req.body;
+
+  try {
+    const updatedContact = await contactModel.findOneAndUpdate(
+      { id: id },
+      { name, surname, email, linkedClients },
+      { new: true }
+    );
+
+    if (!updatedContact) {
+      return res.status(404).json({ error: "Client not found." });
+    }
+
+    res.status(200).json(updatedContact);
+  } catch (error) {
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while updating the client." });
+  }
+};

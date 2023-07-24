@@ -65,7 +65,7 @@ const Client = () => {
             <tr>
               <th>Name</th>
               <th>Client Code</th>
-              <th>No. of Linked Contacts</th>
+              <th className="text-center">No. of Linked Contacts</th>
             </tr>
           </thead>
           <tbody>
@@ -77,7 +77,7 @@ const Client = () => {
                   </Link>
                 </td>
                 <td>{client.clientCode}</td>
-                <td>{client.linkedContacts.length}</td>
+                <td className="text-center">{client.linkedContacts.length}</td>
               </tr>
             ))}
           </tbody>

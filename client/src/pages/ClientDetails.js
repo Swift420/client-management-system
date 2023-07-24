@@ -79,7 +79,7 @@ const ClientDetails = () => {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Full Name</th>
               <th>Surname</th>
               <th>Email Address</th>
             </tr>

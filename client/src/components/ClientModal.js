@@ -98,6 +98,10 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
       setLinkedContacts([...linkedContacts, contactId]);
     }
   };
+
+  const sortedContacts = [...contacts].sort((a, b) =>
+    a.surname.localeCompare(b.surname)
+  );
   return (
     <Modal show={showModal} onHide={handleCloseModal}>
       <Modal.Header closeButton>
@@ -159,11 +163,11 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {contacts.map((contact) => (
+                    {sortedContacts.map((contact) => (
                       <tr key={contact.id}>
                         <td>
                           <Link to={`/contact/${contact.id}`}>
-                            {contact.name}
+                            {`${contact.surname} ${contact.name} `}
                           </Link>
                         </td>
                         <td>{contact.email}</td>

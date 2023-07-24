@@ -61,10 +61,10 @@ const Contact = () => {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Full Name</th>
               <th>Surname</th>
               <th>Email Address</th>
-              <th>No. of Linked Clients</th>
+              <th className="text-center">No. of Linked Clients</th>
             </tr>
           </thead>
           <tbody>
@@ -76,7 +76,7 @@ const Contact = () => {
 
                 <td>{contact.surname}</td>
                 <td>{contact.email}</td>
-                <td>{contact.linkedClients.length}</td>
+                <td className="text-center">{contact.linkedClients.length}</td>
               </tr>
             ))}
           </tbody>
