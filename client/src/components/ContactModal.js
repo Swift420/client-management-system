@@ -97,7 +97,7 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
   return (
     <Modal show={showModal} onHide={handleCloseModal}>
       <Modal.Header closeButton>
-        <Modal.Title>Create a Client</Modal.Title>
+        <Modal.Title>Create a Contact</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Tab.Container activeKey={activeTab}>
