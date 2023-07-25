@@ -177,8 +177,8 @@ const ContactModal = ({ showModal, handleCloseModal }) => {
                         >
                           {/* Check if the contact is linked or not */}
                           {linkedClients.includes(client._id)
-                            ? "Linked"
-                            : "Link"}
+                            ? `http://localhost:5000/client/${client._id}/linked`
+                            : `http://localhost:5000/client/${client._id}/link`}
                         </td>
                       </tr>
                     ))}

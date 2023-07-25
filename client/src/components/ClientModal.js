@@ -176,8 +176,8 @@ const ClientContactModal = ({ showModal, handleCloseModal }) => {
                           onClick={() => toggleLink(contact.id)}
                         >
                           {linkedContacts.includes(contact.id)
-                            ? "Linked"
-                            : "Link"}
+                            ? `http://localhost:5000/contacts/${contact.id}/linked`
+                            : `http://localhost:5000/contacts/${contact.id}/link`}
                         </td>
                       </tr>
                     ))}

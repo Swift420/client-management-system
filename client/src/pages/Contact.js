@@ -61,7 +61,7 @@ const Contact = () => {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th>Full Name</th>
+              <th>Name</th>
               <th>Surname</th>
               <th>Email Address</th>
               <th className="text-center">No. of Linked Clients</th>

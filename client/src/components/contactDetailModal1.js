@@ -86,7 +86,7 @@ const ContactDetailModal1 = ({ showModal, handleCloseModal, contactProp }) => {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th>Full Name</th>
+                <th>Name</th>
                 <th>Client Code</th>
                 <th></th>
               </tr>

@@ -10,6 +10,10 @@ const generateAlphaCode = (name) => {
       alphaPart += word.charAt(0).toUpperCase();
     }
   }
+
+  if (words.length == 2 && words[1].length >= 2) {
+    alphaPart += words[1].charAt(1).toUpperCase();
+  }
   if (words.length == 1 && words[0].length < 3) {
     alphaPart += words[0].toUpperCase();
   }
